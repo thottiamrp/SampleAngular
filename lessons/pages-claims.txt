@@ -1,0 +1,12 @@
+<uef-flex gap="20px"
+    align-content="stretch"
+    align-items="stretch"
+    sx='{"min-height":"70vh"}'>
+    <uef-flex-item flex-basis="18rem">
+        <router-outlet name="claims-sidebar">
+        </router-outlet>
+    </uef-flex-item>
+    <uef-flex-item flex-grow="1">
+        <router-outlet> </router-outlet>
+    </uef-flex-item>
+</uef-flex>

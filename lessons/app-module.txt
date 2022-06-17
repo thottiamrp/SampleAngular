@@ -1,0 +1,40 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ClaimsFormComponent } from './claims/claims-form/claims-form.component';
+import { ClaimsTableComponent } from './claims/claims-table/claims-table.component';
+import { FooterComponent } from './modules/footer/footer.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { SidebarComponent } from './modules/sidebar/sidebar.component';
+import { ClaimsComponent } from './pages/claims/claims.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ConfirmationComponent,
+    PageNotFoundComponent,
+    HomeComponent,
+    ClaimsFormComponent,
+    ClaimsTableComponent,
+    FooterComponent,
+    HeaderComponent,
+    SidebarComponent,
+    ClaimsComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+})
+export class AppModule { }

@@ -1,0 +1,28 @@
+<uef-dialog [open]="open"
+    backdrop
+    action-required
+    width="300px"
+    accessibility-text="Delete Claim">
+    <uef-typography variant="heading2"
+        slot="uef-dialog-header">
+        {{title}}
+    </uef-typography>
+    <uef-typography variant="body-m"
+        line-height="1.5"
+        slot="uef-dialog-body">
+        {{body}}
+    </uef-typography>
+    <uef-button-group slot="uef-dialog-footer"
+        alignment="right"
+        direction="rtl">
+        <uef-button fill="solid"
+            color="danger"
+            (buttonClick)="accept($event)">
+            Delete
+        </uef-button>
+        <uef-button fill="outline"
+            (buttonClick)="closeDialog($event)">
+            Cancel
+        </uef-button>
+    </uef-button-group>
+</uef-dialog>

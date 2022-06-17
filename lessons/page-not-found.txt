@@ -1,0 +1,20 @@
+<uef-flex>
+    <uef-flex-item>
+        <img src="../../../assets/images/404.jpg" />
+    </uef-flex-item>
+    <uef-flex-item>
+        <uef-flex
+            gap="20px"
+            direction="column"
+        >
+            <uef-typography variant="heading1" size="2em">
+                Awww....Dont Cry.
+            </uef-typography>
+            <uef-typography variant="subtitle1"
+                style="--uef-font-size-md: 3em "
+            >
+                It's just a 404 error
+            </uef-typography>
+        </uef-flex>
+    </uef-flex-item>
+</uef-flex>

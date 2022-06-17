@@ -1,0 +1,279 @@
+/*
+ * TS
+*/
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GrtDataService } from '../../../services/grt-data';
+import { ErrorService } from '../../../services/error-service';
+import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ApiCrudService } from '../../../services/api-crud-service';
+import { IClaims } from '../../models/claims.model';
+
+@Component({
+    selector: 'app-claims-form',
+    templateUrl: './claims-form.component.html',
+    styleUrls: ['./claims-form.component.css']
+})
+export class ClaimsFormComponent implements OnInit {
+
+    public claim: { [P in keyof IClaims]: '' };
+    public form: FormGroup;
+    public usStates: string;
+    public personTitles: string;
+    public personSuffixes: string;
+    public errors: string;
+
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private api: ApiCrudService,
+        private grt: GrtDataService,
+        private errorService: ErrorService
+    ) { }
+
+    getClaim(): void {
+
+        this.activatedRoute.params.subscribe(({ id }) => {
+            if (id) {
+                this.api.retrieve(`/api/v1/claims/${id}`).then(
+                    (data: any) => {
+                        this.claim = data;
+                        this.setFormValues({
+                            detail: { values: data }
+                        });
+                    }
+                ).catch(error => {
+                    console.log({ error })
+                })
+            }
+        })
+    }
+
+    setFormValues({ detail: { values } }: any): Promise<any> {
+
+        return (new Promise(resolve => {
+            Object.entries(values).forEach(
+                ([key, value]) => {
+                    const control = this.form.controls[key];
+                    control?.setValue(value);
+                });
+            resolve('done');
+        }));
+    }
+
+    submitForm({ detail: { values } }: any): void {
+
+        const { id = undefined } = (this.claim || {});
+
+        this.setFormValues({ detail: { values: { ...values } } }).then(_ => {
+
+            const {
+                valid, errors
+            } = this.errorService.validateForm(values, this.form);
+
+            this.errors = errors;
+
+            if (valid) {
+                const promise = (id)
+                    ? this.api.update(`/api/v1/claims/${id}`, values)
+                    : this.api.create(`/api/v1/claims/`, values)
+                promise.then(_ => {
+                    this.router.navigate([
+                        '/claims'
+                    ])
+                })
+            }
+        });
+    }
+
+    initFormBuilder(): void {
+
+        this.form = this.formBuilder.group({
+            'name_title': null,
+            'first_name': ['', [
+                (control: AbstractControl) => this.errorService.validateRequired(
+                    control, {
+                    summary: "First Name",
+                    required: "Required"
+                }),
+            ]],
+            'middle_name': [null, [
+                (control: AbstractControl) => this.errorService.validateRequired(
+                    control, {
+                    summary: "Middle Name",
+                    required: "Required"
+                }),
+            ]],
+            'last_name': null,
+            'suffix': null,
+            'street1': '',
+            'street2': null,
+            'city': null,
+            'state': null,
+            'zip': null,
+            'description': ['', [
+                (control: AbstractControl) => this.errorService.validateLength(
+                    control, {
+                    summary: "Description",
+                    invalid_length: "Length must be at least 25 chars"
+                }, 5)],
+            ],
+            'claim_date': null,
+            'ssn': null,
+        });
+
+    }
+
+    ngOnInit(): void {
+
+        this.getClaim();
+        this.initFormBuilder();
+        this.grt.get(
+            'person-suffixes', 'person-titles', 'us-states'
+        ).subscribe(({
+            personSuffix,
+            personTitle,
+            usStates
+        }) => {
+            this.personSuffixes = personSuffix;
+            this.personTitles = personTitle;
+            this.usStates = usStates;
+        });
+    }
+}
+
+/*
+ * HTML
+*/
+<uef-error-summary [errors]="errors"></uef-error-summary>
+
+<uef-form [formGroup]="form"
+    (valueChange)="setFormValues($event)"
+    (submitForm)="submitForm($event)">
+
+    <uef-flex direction="column"
+        gap="25px"
+        sx='{"width":"600px"}'>
+        <uef-typography variant="heading1" lineHeight="1.5">
+            Add/ Edit claim User
+        </uef-typography>
+
+        <uef-flex-item flexGrow="1">
+            <uef-flex gap="10px">
+                <uef-datepicker [value]="claim?.claim_date"
+                    label="Claim Date"
+                    field-name="claim_date"
+                    instructions="Effective Date">
+                </uef-datepicker>
+                <uef-ssn [value]="claim?.ssn"
+                    field-name="ssn"
+                    label="Social Security Number (SSN)"
+                    instructions="[Instructions]"
+                    width="12ch"></uef-ssn>
+            </uef-flex>
+        </uef-flex-item>
+
+        <uef-compound label="Full Name"
+            instructions="Requestors name">
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="0">
+                    <uef-droplist [value]="claim?.name_title"
+                        field-name="name_title"
+                        label="Title"
+                        [items]="personTitles">
+                        <uef-droplist-item label="--"></uef-droplist-item>
+                    </uef-droplist>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox [value]="claim?.first_name"
+                        field-name="first_name"
+                        label="First"
+                        maxlength="20"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox [value]="claim?.middle_name"
+                        field-name="middle_name"
+                        label="Middle"
+                        maxlength="20"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox [value]="claim?.last_name"
+                        field-name="last_name"
+                        label="Last"
+                        maxlength="20"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="0">
+                    <uef-droplist [value]="claim?.suffix"
+                        field-name="suffix"
+                        label="Suffix"
+                        [items]="personSuffixes">
+                        <uef-droplist-item label="--"></uef-droplist-item>
+                    </uef-droplist>
+                </uef-flex-item>
+            </uef-flex>
+        </uef-compound>
+
+        <uef-compound label="Address"
+            instructions="[Instructions]">
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox [value]="claim?.street1"
+                        field-name="street1"
+                        label="Street Address"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox [value]="claim?.street2"
+                        field-name="street2"
+                        label="Apartment, Suite, Building, Etc."></uef-textbox>
+                </uef-flex-item>
+            </uef-flex>
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox [value]="claim?.city"
+                        field-name="city"
+                        label="City"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="1">
+                    <uef-flex flexGrow="1"
+                        gap="10px">
+                        <uef-droplist [value]="claim?.state"
+                            [items]="usStates"
+                            field-name="state"
+                            label="State">
+                            <uef-droplist-item label="--"></uef-droplist-item>
+                        </uef-droplist>
+                        <uef-textbox [value]="claim?.zip"
+                            field-name="zip"
+                            label="ZIP Code"
+                            maxlength="9"
+                            width="9em"
+                            format="*****-****"></uef-textbox>
+                    </uef-flex>
+                </uef-flex-item>
+            </uef-flex>
+        </uef-compound>
+        <uef-textarea [value]="claim?.description"
+            field-name="description"
+            label="Claim Description"
+            instructions="500 characters maximum"
+            maxlength="500"
+            value="Some Text"></uef-textarea>
+        <uef-flex-item flexGrow="1">
+            <uef-button type="button"
+                value="reset">Reset</uef-button>
+            <uef-button type="button"
+                value="clear">Clear</uef-button>
+            <uef-button color="default"
+                fill="solid"
+                type="submit">Submit</uef-button>
+        </uef-flex-item>
+    </uef-flex>
+
+</uef-form>

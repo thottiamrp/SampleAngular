@@ -1,0 +1,69 @@
+<uef-table striped="odd"
+    breakpoint="900px"
+    width="100%"
+    sticky-header
+    sticky-footer
+    search>
+    <uef-pagination slot="uef-table-controls-top"
+        show-text
+        page="1"
+        dial="3"
+        limit="10"
+        [results]="results"></uef-pagination>
+    <uef-thead>
+        <uef-tr>
+            <uef-th sortable
+                type="date">Claim Date</uef-th>
+            <uef-th sortable>Name</uef-th>
+            <uef-th>Description</uef-th>
+            <uef-th sortable>State</uef-th>
+            <uef-th sortable>Zip</uef-th>
+            <uef-th width="150px">Actions</uef-th>
+        </uef-tr>
+    </uef-thead>
+    <uef-tbody>
+        <uef-tr *ngFor="let item of items; let i = index">
+            <uef-td data-label="Claims Date">
+                {{item?.claim_date}}
+            </uef-td>
+            <uef-td data-label="Name">
+                {{item?.first_name}} {{item?.middle_name}} {{item?.last_name}}
+            </uef-td>
+            <uef-td data-label="Description">{{item?.description}}</uef-td>
+            <uef-td data-label="State">
+                {{item?.state}}
+            </uef-td>
+            <uef-td data-label="Zip">
+                {{item?.zip}}
+            </uef-td>
+            <uef-td align="center">
+                <uef-button color="default"
+                    fill="none"
+                    accessibilityText="Edit claim for {{item?.first_name}} {{item?.last_name}}"
+                    (buttonClick)="editClaim(item.id)">
+                    <uef-icon name="edit"
+                        type="solid"></uef-icon>
+                </uef-button>
+                <uef-button color="default"
+                    (buttonClick)="deleteClaim(item)"
+                    fill="none"
+                    accessibilityText="Delete claim for {{item?.first_name}} {{item?.last_name}}">
+                    <uef-icon name="times"
+                        type="solid"></uef-icon>
+                </uef-button>
+            </uef-td>
+        </uef-tr>
+    </uef-tbody>
+    <uef-pagination slot="uef-table-controls-bottom"
+        show-text
+        page="1"
+        dial="3"
+        limit="10"
+        [results]="results"></uef-pagination>
+</uef-table>
+
+<app-confirmation [open]="open"
+    title="Confirm"
+    [body]="confirmMsg"
+    (cancel)="cancelDelete()"
+    (confirm)="confirmDelete()"></app-confirmation>

@@ -1,0 +1,47 @@
+<uef-container width="80%"
+    sx='{"background":"#1b1b1b"}'>
+    <uef-banner></uef-banner>
+</uef-container>
+
+<uef-container id="globaloptions"
+    width="80%"
+    sx='{"background":"var(--uef-color-blue-dark)","padding":"1rem 0"}'>
+    <uef-flex justify-content="flex-end">
+        <uef-flex-item>
+            <uef-typography variant="body-m" tag="span" color="#fff">
+                Links should go here
+            </uef-typography>
+        </uef-flex-item>
+    </uef-flex>
+</uef-container>
+
+<uef-container width="80%"
+    sx='{"box-shadow":"0px 3px 3px 1px #00000061", "margin-bottom": "15px", "padding": "15px"}'>
+    <uef-flex direction="row"
+        align-items="center"
+        gap="10px">
+        <uef-flex-item>
+            <img src="./assets/images/ssa-logo.svg"
+                alt="SSA Logo"
+                width="48"
+                height="48" />
+        </uef-flex-item>
+
+        <uef-flex-item flex-grow="1">
+            <uef-typography variant="heading1"
+                tag="h1">
+                Social Security
+            </uef-typography>
+        </uef-flex-item>
+
+        <uef-flex-item>
+            <uef-nav>
+                <uef-nav-item routerLink="/" current>Home</uef-nav-item>
+                <uef-nav-item routerLink="/users">Users</uef-nav-item>
+                <uef-nav-item href="javascript:void(0)"
+                    routerLink="/claims">Claims</uef-nav-item>
+            </uef-nav>
+        </uef-flex-item>
+
+    </uef-flex>
+</uef-container>

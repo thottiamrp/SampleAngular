@@ -1,0 +1,65 @@
+/*
+ * TS File
+*/
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-confirmation',
+  templateUrl: './confirmation.component.html',
+  styleUrls: ['./confirmation.component.css']
+})
+export class ConfirmationComponent {
+
+  @Input() open: boolean = false;
+
+  @Input() title: string = "Are you sure?";
+
+  @Input() body: string = "";
+
+  @Output() confirm = new EventEmitter();
+
+  @Output() cancel = new EventEmitter();
+
+  closeModal(event?: any): void {
+
+    this.open = false;
+
+    this.cancel.emit(event);
+  }
+
+  accept(event?: any): void {
+
+    this.open = false;
+
+    this.confirm.emit(event);
+  }
+}
+
+/*
+ * HTML File
+*/
+<uef-dialog [open]="open" backdrop action-required>
+    <uef-typography
+        variant="heading2"
+        slot="uef-dialog-header">
+        {{title}}
+      </uef-typography>
+      <uef-typography
+        variant="body-m"
+        line-height="1.5"
+        slot="uef-dialog-body">
+            {{body}}
+      </uef-typography>
+      <uef-button-group slot="uef-dialog-footer">
+        <uef-button
+            fill="outline"
+            (buttonClick)="closeModal($event)"
+        >Cancel</uef-button>
+        <uef-button
+            width="100%"
+            fill="solid"
+
+            (buttonClick)="accept($event)"
+            >Ok</uef-button>
+        </uef-button-group>
+</uef-dialog>

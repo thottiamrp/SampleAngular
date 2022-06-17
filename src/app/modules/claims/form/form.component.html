@@ -1,0 +1,128 @@
+<uef-error-summary header="Please correct the following information:"
+    [errors]="errors"></uef-error-summary>
+
+<uef-form [formGroup]="form"
+    (valueChange)="setFormValues($event)"
+    (submitForm)="submitForm($event)">
+    <uef-flex direction="column"
+        gap="--uef-space-stack-4x">
+        <uef-typography variant="heading2">
+            New Claimant
+            <!-- NOTE: THIS SHOULD UPDATE -->
+        </uef-typography>
+        <uef-flex sx='{"width":"200px"}'>
+            <uef-datepicker label="Claim Date"
+                [value]="claim?.claim_date"
+                field-name="claim_date"
+                required></uef-datepicker>
+        </uef-flex>
+        <uef-compound label="Claimant's Name">
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="0">
+                    <uef-droplist field-name="name_title"
+                        [value]="claim?.name_title"
+                        label="Title"
+                        [items]="person_titles">
+                        <uef-droplist-item label="--"></uef-droplist-item>
+                    </uef-droplist>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox field-name="first_name"
+                        [value]="claim?.first_name"
+                        label="First"
+                        maxlength="20"
+                        required></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox field-name="middle_name"
+                        [value]="claim?.middle_name"
+                        label="Middle"
+                        maxlength="20"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="2">
+                    <uef-textbox field-name="last_name"
+                        [value]="claim?.last_name"
+                        label="Last"
+                        maxlength="20"
+                        required></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="0">
+                    <uef-droplist [items]="person_suffixes"
+                        [value]="claim?.suffix"
+                        field-name="suffix"
+                        label="Suffix">
+                        <uef-droplist-item label="--"></uef-droplist-item>
+                    </uef-droplist>
+                </uef-flex-item>
+            </uef-flex>
+        </uef-compound>
+        <uef-ssn field-name="ssn"
+            [value]="claim?.ssn"
+            label="Claimant's Social Security Number (SSN)"
+            width="12ch"
+            required>
+        </uef-ssn>
+        <uef-compound label="Claimant's Address">
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox field-name="street1"
+                        [value]="claim?.street1"
+                        label="Street Address"></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox field-name="street2"
+                        [value]="claim?.street2"
+                        label="Apartment, Suite, Building, Etc."></uef-textbox>
+                </uef-flex-item>
+            </uef-flex>
+            <uef-flex gap="10px"
+                direction="row"
+                wrap="wrap">
+                <uef-flex-item flex-grow="1">
+                    <uef-textbox field-name="city"
+                        [value]="claim?.city"
+                        label="City"
+                        required></uef-textbox>
+                </uef-flex-item>
+                <uef-flex-item flex-grow="1">
+                    <uef-droplist field-name="state"
+                        [value]="claim?.state"
+                        label="State"
+                        [items]="us_states"
+                        required>
+                        <uef-droplist-item label="--"></uef-droplist-item>
+                    </uef-droplist>
+                </uef-flex-item>
+                <uef-flex-item>
+                    <uef-textbox field-name="zip"
+                        [value]="claim?.zip"
+                        label="ZIP Code"
+                        maxlength="9"
+                        width="9em"
+                        format="*****-****"
+                        inputmode="numeric"
+                        required></uef-textbox>
+                </uef-flex-item>
+            </uef-flex>
+        </uef-compound>
+        <uef-textarea label="Description"
+            [value]="claim?.description"
+            maxlength="500"
+            field-name="description"
+            required
+            value="">
+        </uef-textarea>
+        <uef-button-group>
+            <uef-button fill="solid"
+                type="submit">Submit</uef-button>
+            <uef-button fill="outline"
+                value="clear">Clear</uef-button>
+            <uef-button fill="outline"
+                value="reset">Reset</uef-button>
+        </uef-button-group>
+    </uef-flex>
+</uef-form>

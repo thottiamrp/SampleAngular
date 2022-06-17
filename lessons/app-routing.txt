@@ -1,0 +1,51 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ClaimsTableComponent } from './claims/claims-table/claims-table.component';
+import { ClaimsFormComponent } from './claims/claims-form/claims-form.component';
+import { SidebarComponent } from './modules/sidebar/sidebar.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ClaimsComponent } from './pages/claims/claims.component';
+
+const routes: Routes = [
+  {
+    path: "",
+    pathMatch: "full",
+    component: HomeComponent,
+  },
+  {
+    path: "claims",
+    component: ClaimsComponent,
+    children: [
+      {
+        path: "",
+        component: SidebarComponent,
+        outlet: 'claims-sidebar'
+      },
+      {
+        path: "",
+        component: ClaimsTableComponent,
+      },
+      {
+        path: "create",
+        component: ClaimsFormComponent,
+      },
+      {
+        path: "edit/:id",
+        component: ClaimsFormComponent,
+      }
+    ]
+  },
+  {
+    path: "**",
+    pathMatch: "full",
+    component: PageNotFoundComponent
+  }
+];
+
+@NgModule({
+  // imports: [RouterModule.forRoot([...routes], { onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

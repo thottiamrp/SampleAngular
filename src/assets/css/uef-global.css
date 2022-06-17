@@ -1,0 +1,70 @@
+/*
+ * The base CSS file contains basic CSS reset for modern browsers as well as
+ * base HTML styling consistent with the design system.
+ */
+
+
+html {
+    font-size: 100%; /* this is where we could also do dynamic font sizing */
+    font-weight: var(--uef-font-weight-regular, normal);
+    line-height: var(--uef-body-line-height, 1);
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -webkit-tap-highlighet-color: rgba(0,0,0,0);
+    touch-action: manipulation; /* Removes 300ms tap delay in some browsers */
+}
+
+body {
+    min-height: 1vw; /* dynamic font sizing hack */
+    color: var(--uef-body-color, #111);
+    background-color: var(--uef-body-bg, #FFF);
+    font-size: var(--uef-size-md, 1rem);
+    font-family: var(--uef-font-family-sans);
+    line-height: var(--uef-body-line-height, 1);
+    margin: 0;
+    padding: 0;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+[hidden],
+template {
+  display: none !important;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  all:unset
+}
+
+h1 {
+  font-size: var(--uef-font-size-3xl);
+}
+
+h2 {
+  font-size: var(--uef-font-size-2xl);
+}
+
+h3 {
+  font-size: var(--uef-font-size-xl);
+}
+
+h4 {
+  font-size: var(--uef-font-size-lg);
+}
+
+h5 {
+  font-size: var(--uef-font-size-md);
+}
+
+h6 {
+  font-size: var(--uef-font-size-sm);
+}

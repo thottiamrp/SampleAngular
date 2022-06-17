@@ -1,0 +1,10 @@
+[
+    {
+        "url": "/api/v1/users/",
+        "module": "./services/users"
+    },
+    {
+        "url": "/api/v1/claims/",
+        "module": "./services/claims"
+    }
+]

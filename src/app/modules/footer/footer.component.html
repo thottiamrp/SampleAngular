@@ -1,0 +1,60 @@
+<uef-footer style='display:"block";margin-top:"2em";--uef-idenfier-background-color:"var(--uef-color-blue-dark)";'>
+  <uef-container width="80%" slot="uef-identifier">
+
+    <uef-flex
+        align-items="center"
+        wrap="wrap"
+        gap="1em"
+        sx='{"margin":"1em 0"}'
+      >
+        <span>
+          <img
+            src="./assets/images/ssa-logo.svg"
+            width="40"
+            height="40"
+            alt="SSA Seal"
+          />
+        </span>
+        <div>
+          <uef-typography
+            color="--uef-color-gray-default-light"
+            line-height="--uef-font-line-height-regular"
+          >
+            SSA.gov
+          </uef-typography>
+          <uef-typography
+            color="--uef-color-white"
+            line-height="--uef-font-line-height-regular"
+            weight="--uef-font-weight-semibold"
+          >
+            An official website of the Social Security Administration
+          </uef-typography>
+        </div>
+      </uef-flex>
+
+      <nav>
+        <uef-grid
+          grid-template-columns="repeat(4, minmax(15em,1fr))"
+          gap=".5em"
+          sx='{"margin":"1rem 0"}'
+        >
+          <a href="https://www.ssa.gov/agency/">About SSA</a>
+          <a href="https://www.ssa.gov/accessibility/">Accessibility support</a>
+          <a href="https://www.ssa.gov/foia/">FOIA requests</a>
+          <a href="https://www.ssa.gov/eeo/nofear/index.htm">No FEAR Act data</a>
+          <a href="https://oig.ssa.gov/">Office of the Inspector General</a>
+          <a href="https://www.ssa.gov/agency/performance/">Performance reports</a>
+          <a href="https://www.ssa.gov/privacy/">Privacy policy</a>
+        </uef-grid>
+      </nav>
+
+      <uef-section tag="section"
+        accessibilityText="U.S. government information and services"
+      >
+        <uef-typography variant="body-m" line-height="var(--uef-font-line-height-extra-loose)">
+          Looking for U.S. government information and services?
+          <a href="https://www.usa.gov/">Visit USA.gov</a>
+        </uef-typography>
+      </uef-section>
+    </uef-container>
+  </uef-footer>
